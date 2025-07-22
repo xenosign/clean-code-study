@@ -79,4 +79,28 @@ public class MeaningfulName {
         private Date modificationTimestamp;
         private final String recordId = "102";
     }
+
+    public void easyToSearch() {
+
+        int s = 0;
+        int[] t = {1, 2, 3, 4};
+
+        for (int j = 0; j < 34; j++) {
+            s += (t[j] * 4) / 5;
+        }
+
+        int realDaysPerIdealDay = 4;
+        final int WORK_DAYS_PER_WEEK = 5;
+        final int NUMBER_OF_TASKS = 5;
+        int[] taskEstimate = new int[NUMBER_OF_TASKS];
+        int sum = 0;
+
+        for (int j = 0; j < NUMBER_OF_TASKS; j++) {
+            int realTaskDays = taskEstimate[j] * realDaysPerIdealDay;
+            int realTaskWeeks = (realTaskDays / WORK_DAYS_PER_WEEK);
+            sum += realTaskWeeks;
+        }
+    }
+
+
 }
