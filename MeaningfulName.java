@@ -102,5 +102,35 @@ public class MeaningfulName {
         }
     }
 
+    // 조건문 명확화, 매직 넘버 제거
+    public class ScheduleCalculator {
+
+        private static final int REAL_DAYS_PER_IDEAL_DAY = 4;
+        private static final int WORK_DAYS_PER_WEEK = 5;
+        private static final int NUMBER_OF_TASKS = 5;
+
+        private int[] taskEstimates = new int[NUMBER_OF_TASKS];
+
+        /**
+         * 전체 작업 기간(주 단위) 계산
+         */
+        public int calculateTotalRealTaskWeeks() {
+            int totalWeeks = 0;
+
+            for (int estimate : taskEstimates) {
+                totalWeeks += calculateRealWeeks(estimate);
+            }
+
+            return totalWeeks;
+        }
+
+        /**
+         * 하나의 작업에 대한 실제 소요 주 계산
+         */
+        private int calculateRealWeeks(int idealDays) {
+            int realTaskDays = idealDays * REAL_DAYS_PER_IDEAL_DAY;
+            return realTaskDays / WORK_DAYS_PER_WEEK;
+        }
+    }
 
 }
