@@ -133,4 +133,49 @@ public class MeaningfulName {
         }
     }
 
+    public class OrderProcessor {
+
+        public void processOrder(Order order) {
+            if (isHighValueAndUrgent(order)) {
+                expediteOrder(order);
+            } else {
+                processNormally(order);
+            }
+        }
+
+        /**
+         * 고가이며 긴급한 주문인지 여부
+         */
+        private boolean isHighValueAndUrgent(Order order) {
+            final int HIGH_VALUE_THRESHOLD = 1_000_000; // 100만원
+            return order.getPrice() > HIGH_VALUE_THRESHOLD && order.isUrgent();
+        }
+
+        private void expediteOrder(Order order) {
+            System.out.println("고가 & 긴급 주문 → 빠른 처리");
+        }
+
+        private void processNormally(Order order) {
+            System.out.println("일반 처리");
+        }
+
+        static class Order {
+            private final int price;
+            private final boolean urgent;
+
+            public Order(int price, boolean urgent) {
+                this.price = price;
+                this.urgent = urgent;
+            }
+
+            public int getPrice() {
+                return price;
+            }
+
+            public boolean isUrgent() {
+                return urgent;
+            }
+        }
+    }
+
 }
