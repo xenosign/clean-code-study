@@ -190,4 +190,111 @@ public class CleanFunctions {
     private String getCurrentDateTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
+
+    // ========== 4. Switch 문은 피해라 ==========
+
+    // 나쁜 예: Switch 문 사용
+    public double calculateEmployeeBenefitsBAD(Employee employee) {
+        double benefits = 0;
+        switch (employee.getEmployeeType()) {
+            case "FULL_TIME":
+                benefits = employee.getSalary() * 0.2;
+                break;
+            case "PART_TIME":
+                benefits = employee.getSalary() * 0.1;
+                break;
+            case "CONTRACT":
+                benefits = 0;
+                break;
+            case "INTERN":
+                benefits = employee.getSalary() * 0.05;
+                break;
+            default:
+                benefits = 0;
+        }
+        return benefits;
+    }
+
+    // 좋은 예: 다형성 활용 (인터페이스와 구현체들)
+    public double calculateEmployeeBenefits(Employee employee) {
+        return employee.getBenefitsCalculator().calculate(employee.getSalary());
+    }
+
+    // ========== 5. 서술적인 이름을 사용해라 ==========
+
+    // 나쁜 예: 의미 없는 함수명
+    public List<Employee> get(List<Employee> list) {
+        return list.stream()
+                .filter(e -> e.getSalary() > 50000)
+                .collect(Collectors.toList());
+    }
+
+    // 좋은 예: 서술적인 함수명
+    public List<Employee> getHighSalaryEmployees(List<Employee> employees) {
+        return employees.stream()
+                .filter(this::isHighSalaryEmployee)
+                .collect(Collectors.toList());
+    }
+
+    private boolean isHighSalaryEmployee(Employee employee) {
+        return employee.getSalary() > 50000;
+    }
+
+    // 더 구체적인 서술적 이름들
+    public List<Employee> getEmployeesEligibleForPromotion(List<Employee> employees) {
+        return employees.stream()
+                .filter(this::hasMinimumExperience)
+                .filter(this::hasGoodPerformanceRating)
+                .collect(Collectors.toList());
+    }
+
+    private boolean hasMinimumExperience(Employee employee) {
+        return employee.getYearsOfExperience() >= 2;
+    }
+
+    private boolean hasGoodPerformanceRating(Employee employee) {
+        return employee.getPerformanceRating() >= 3;
+    }
+
+    // ========== 6. 함수 인수는 적게 (최대 3개) ==========
+
+    // 나쁜 예: 인수가 너무 많음
+    public void createEmployeeReportBAD(String name, int age, String department,
+                                        double salary, String email, String phone,
+                                        String address, LocalDateTime hireDate,
+                                        int performanceRating) {
+        // 구현 생략
+    }
+
+    // 좋은 예: 객체로 묶어서 전달
+    public void createEmployeeReport(Employee employee) {
+        generateDetailedReport(employee);
+    }
+
+    // 좋은 예: 필요한 최소한의 인수만 전달
+    public double calculateMonthlyPayment(double principal, double rate, int months) {
+        return principal * (rate * Math.pow(1 + rate, months)) / (Math.pow(1 + rate, months) - 1);
+    }
+
+    // Flag 인수는 피하고 메서드를 분리
+    // 나쁜 예
+    public void printEmployeeInfoBAD(Employee employee, boolean detailed) {
+        if (detailed) {
+            // 상세 정보 출력
+        } else {
+            // 요약 정보 출력
+        }
+    }
+
+    // 좋은 예: 메서드 분리
+    public void printEmployeeSummary(Employee employee) {
+        System.out.println(employee.getName() + " - " + employee.getDepartment());
+    }
+
+    public void printEmployeeDetailedInfo(Employee employee) {
+        System.out.println("Name: " + employee.getName());
+        System.out.println("Department: " + employee.getDepartment());
+        System.out.println("Salary: " + employee.getSalary());
+        System.out.println("Email: " + employee.getEmail());
+    }
 }
