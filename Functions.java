@@ -510,107 +510,107 @@ public class Functions {
             super(message);
         }
     }
-}
 
-// ========== 관련 인터페이스와 클래스들 ==========
+    // ========== 관련 인터페이스와 클래스들 ==========
 
-interface BenefitsCalculator {
-    double calculate(double salary);
-}
-
-class FullTimeBenefitsCalculator implements BenefitsCalculator {
-    @Override
-    public double calculate(double salary) {
-        return salary * 0.2;
-    }
-}
-
-class PartTimeBenefitsCalculator implements BenefitsCalculator {
-    @Override
-    public double calculate(double salary) {
-        return salary * 0.1;
-    }
-}
-
-class ContractBenefitsCalculator implements BenefitsCalculator {
-    @Override
-    public double calculate(double salary) {
-        return 0;
-    }
-}
-
-class Employee {
-    private String name;
-    private int age;
-    private String department;
-    private double salary;
-    private String email;
-    private String phone;
-    private String address;
-    private LocalDateTime hireDate;
-    private int performanceRating;
-    private String employeeType;
-    private String status;
-    private int yearsOfExperience;
-    private BenefitsCalculator benefitsCalculator;
-
-    // 생성자
-    public Employee(String name, int age, String department, double salary,
-                    String employeeType, BenefitsCalculator benefitsCalculator) {
-        this.name = name;
-        this.age = age;
-        this.department = department;
-        this.salary = salary;
-        this.employeeType = employeeType;
-        this.benefitsCalculator = benefitsCalculator;
-        this.status = "INACTIVE";
+    interface BenefitsCalculator {
+        double calculate(double salary);
     }
 
-    // Getters and Setters
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
-
-    public String getDepartment() { return department; }
-    public void setDepartment(String department) { this.department = department; }
-
-    public double getSalary() { return salary; }
-    public void setSalary(double salary) { this.salary = salary; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
-
-    public LocalDateTime getHireDate() { return hireDate; }
-    public void setHireDate(LocalDateTime hireDate) { this.hireDate = hireDate; }
-
-    public int getPerformanceRating() { return performanceRating; }
-    public void setPerformanceRating(int performanceRating) {
-        this.performanceRating = performanceRating;
+    class FullTimeBenefitsCalculator implements BenefitsCalculator {
+        @Override
+        public double calculate(double salary) {
+            return salary * 0.2;
+        }
     }
 
-    public String getEmployeeType() { return employeeType; }
-    public void setEmployeeType(String employeeType) {
-        this.employeeType = employeeType;
+    class PartTimeBenefitsCalculator implements BenefitsCalculator {
+        @Override
+        public double calculate(double salary) {
+            return salary * 0.1;
+        }
     }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
-    public int getYearsOfExperience() { return yearsOfExperience; }
-    public void setYearsOfExperience(int yearsOfExperience) {
-        this.yearsOfExperience = yearsOfExperience;
+    class ContractBenefitsCalculator implements BenefitsCalculator {
+        @Override
+        public double calculate(double salary) {
+            return 0;
+        }
     }
 
-    public BenefitsCalculator getBenefitsCalculator() { return benefitsCalculator; }
-    public void setBenefitsCalculator(BenefitsCalculator benefitsCalculator) {
-        this.benefitsCalculator = benefitsCalculator;
+    class Employee {
+        private String name;
+        private int age;
+        private String department;
+        private double salary;
+        private String email;
+        private String phone;
+        private String address;
+        private LocalDateTime hireDate;
+        private int performanceRating;
+        private String employeeType;
+        private String status;
+        private int yearsOfExperience;
+        private BenefitsCalculator benefitsCalculator;
+
+        // 생성자
+        public Employee(String name, int age, String department, double salary,
+                        String employeeType, BenefitsCalculator benefitsCalculator) {
+            this.name = name;
+            this.age = age;
+            this.department = department;
+            this.salary = salary;
+            this.employeeType = employeeType;
+            this.benefitsCalculator = benefitsCalculator;
+            this.status = "INACTIVE";
+        }
+
+        // Getters and Setters
+        public String getName() { return name; }
+        public void setName(String name) { this.name = name; }
+
+        public int getAge() { return age; }
+        public void setAge(int age) { this.age = age; }
+
+        public String getDepartment() { return department; }
+        public void setDepartment(String department) { this.department = department; }
+
+        public double getSalary() { return salary; }
+        public void setSalary(double salary) { this.salary = salary; }
+
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+
+        public String getPhone() { return phone; }
+        public void setPhone(String phone) { this.phone = phone; }
+
+        public String getAddress() { return address; }
+        public void setAddress(String address) { this.address = address; }
+
+        public LocalDateTime getHireDate() { return hireDate; }
+        public void setHireDate(LocalDateTime hireDate) { this.hireDate = hireDate; }
+
+        public int getPerformanceRating() { return performanceRating; }
+        public void setPerformanceRating(int performanceRating) {
+            this.performanceRating = performanceRating;
+        }
+
+        public String getEmployeeType() { return employeeType; }
+        public void setEmployeeType(String employeeType) {
+            this.employeeType = employeeType;
+        }
+
+        public String getStatus() { return status; }
+        public void setStatus(String status) { this.status = status; }
+
+        public int getYearsOfExperience() { return yearsOfExperience; }
+        public void setYearsOfExperience(int yearsOfExperience) {
+            this.yearsOfExperience = yearsOfExperience;
+        }
+
+        public BenefitsCalculator getBenefitsCalculator() { return benefitsCalculator; }
+        public void setBenefitsCalculator(BenefitsCalculator benefitsCalculator) {
+            this.benefitsCalculator = benefitsCalculator;
+        }
     }
 }
