@@ -1589,6 +1589,7 @@ public class MeaningfulName {
         }
     }
 
+    // 헬퍼 클래스
     static class Order {
         private int quantity;
         private int price;
