@@ -541,8 +541,13 @@ public class Functions {
             this.content = content;
         }
 
-        public String getSubject() { return subject; }
-        public String getContent() { return content; }
+        public String getSubject() {
+            return subject;
+        }
+
+        public String getContent() {
+            return content;
+        }
     }
 
     enum EmployeeStatus {
@@ -571,8 +576,11 @@ public class Functions {
 
     interface EmployeeRepository {
         Employee findById(String id);
+
         void save(Employee employee);
+
         void delete(Employee employee);
+
         List<Employee> findAll();
     }
 
@@ -586,7 +594,9 @@ public class Functions {
 
     interface SessionManager {
         void createSession(String userName);
+
         void invalidateSession(String userName);
+
         boolean isSessionValid(String userName);
     }
 
@@ -717,52 +727,114 @@ public class Functions {
         }
 
         // Getters and Setters
-        public String getId() { return id; }
-        public void setId(String id) { this.id = id; }
+        public String getId() {
+            return id;
+        }
 
-        public String getName() { return name; }
-        public void setName(String name) { this.name = name; }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-        public int getAge() { return age; }
-        public void setAge(int age) { this.age = age; }
+        public String getName() {
+            return name;
+        }
 
-        public String getDepartment() { return department; }
-        public void setDepartment(String department) { this.department = department; }
+        public void setName(String name) {
+            this.name = name;
+        }
 
-        public double getSalary() { return salary; }
-        public void setSalary(double salary) { this.salary = salary; }
+        public int getAge() {
+            return age;
+        }
 
-        public String getEmail() { return email; }
-        public void setEmail(String email) { this.email = email; }
+        public void setAge(int age) {
+            this.age = age;
+        }
 
-        public String getPhone() { return phone; }
-        public void setPhone(String phone) { this.phone = phone; }
+        public String getDepartment() {
+            return department;
+        }
 
-        public String getAddress() { return address; }
-        public void setAddress(String address) { this.address = address; }
+        public void setDepartment(String department) {
+            this.department = department;
+        }
 
-        public LocalDateTime getHireDate() { return hireDate; }
-        public void setHireDate(LocalDateTime hireDate) { this.hireDate = hireDate; }
+        public double getSalary() {
+            return salary;
+        }
 
-        public int getPerformanceRating() { return performanceRating; }
+        public void setSalary(double salary) {
+            this.salary = salary;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public LocalDateTime getHireDate() {
+            return hireDate;
+        }
+
+        public void setHireDate(LocalDateTime hireDate) {
+            this.hireDate = hireDate;
+        }
+
+        public int getPerformanceRating() {
+            return performanceRating;
+        }
+
         public void setPerformanceRating(int performanceRating) {
             this.performanceRating = performanceRating;
         }
 
-        public String getEmployeeType() { return employeeType; }
+        public String getEmployeeType() {
+            return employeeType;
+        }
+
         public void setEmployeeType(String employeeType) {
             this.employeeType = employeeType;
         }
 
-        public String getStatus() { return status; }
-        public void setStatus(String status) { this.status = status; }
+        public String getStatus() {
+            return status;
+        }
 
-        public int getYearsOfExperience() { return yearsOfExperience; }
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public int getYearsOfExperience() {
+            return yearsOfExperience;
+        }
+
         public void setYearsOfExperience(int yearsOfExperience) {
             this.yearsOfExperience = yearsOfExperience;
         }
 
-        public BenefitsCalculator getBenefitsCalculator() { return benefitsCalculator; }
+        public BenefitsCalculator getBenefitsCalculator() {
+            return benefitsCalculator;
+        }
+
         public void setBenefitsCalculator(BenefitsCalculator benefitsCalculator) {
             this.benefitsCalculator = benefitsCalculator;
         }
@@ -777,23 +849,4 @@ public class Functions {
                     '}';
         }
     }
-
-    // ========== 사용 예시를 위한 메인 메서드 ==========
-
-    public static void main(String[] args) {
-        Functions functions = new Functions();
-
-        // 테스트 직원들 생성
-        Employee employee1 = new Employee("E001", "John Doe", 30, "Engineering", 75000.0,
-                "FULL_TIME", new FullTimeBenefitsCalculator());
-        employee1.setEmail("john.doe@company.com");
-        employee1.setPerformanceRating(4);
-        employee1.setYearsOfExperience(3);
-
-        Employee employee2 = new Employee("E002", "Jane Smith", 28, "Marketing", 45000.0,
-                "PART_TIME", new PartTimeBenefitsCalculator());
-        employee2.setEmail("jane.smith@company.com");
-        employee2.setPerformanceRating(3);
-        employee2.setYearsOfExperience(2);
-
-        List<Employee> employees = Arrays.asList(employee1, employee
+}
