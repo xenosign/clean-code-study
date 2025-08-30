@@ -1,8 +1,11 @@
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
+ * 클린 코드 포매팅 원칙을 보여주는 실행 가능한 예제 클래스
  * - 상단 주석으로 파일 목적을 분명히 밝히기.
  * - Import는 표준 라이브러리 → 서드파티 → 내부 패키지 순서(여기선 표준만 사용).
  * - 클래스 내 요소(상수 → 필드 → 생성자/정적 팩토리 → 공개 API → 비공개 헬퍼) 순서 유지.
@@ -13,13 +16,14 @@ import java.util.Objects;
  * - Guard Clause(빠른 반환)로 중첩 최소화.
  * - 메서드는 위에서 아래로(상위 수준 → 세부) 읽히게 배치.
  */
-public final class FormattingExample {
+public class Formatter {
 
     // ─────────────────────────────────────────────────────────────────────────────
     // 1) 상수(Constant): UPPER_SNAKE_CASE, 도메인 의미가 드러나는 이름
     // ─────────────────────────────────────────────────────────────────────────────
     private static final int DEFAULT_RETRY_LIMIT = 3;
     private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(2);
+    private static final Random RANDOM = new Random();
 
     // ─────────────────────────────────────────────────────────────────────────────
     // 2) 필드(Field): 접근 제어자 명확히, 불변성은 final로 표현
@@ -30,7 +34,7 @@ public final class FormattingExample {
     // ─────────────────────────────────────────────────────────────────────────────
     // 3) 생성자 / 정적 팩토리: 유효성 검사와 Guard Clause로 중첩 최소화
     // ─────────────────────────────────────────────────────────────────────────────
-    private FormattingExample(int retryLimit, Duration timeout) {
+    private Formatter(int retryLimit, Duration timeout) {
         // 의미 있는 매개변수 검사 메시지. 한 줄이 길어질 때는 적절히 개행.
         if (retryLimit < 0) {
             throw new IllegalArgumentException("retryLimit must be >= 0: " + retryLimit);
@@ -39,12 +43,55 @@ public final class FormattingExample {
         this.timeout = Objects.requireNonNull(timeout, "timeout must not be null");
     }
 
-    public static FormattingExample withDefaults() {
-        return new FormattingExample(DEFAULT_RETRY_LIMIT, DEFAULT_TIMEOUT);
+    public static Formatter withDefaults() {
+        return new Formatter(DEFAULT_RETRY_LIMIT, DEFAULT_TIMEOUT);
     }
 
-    public static FormattingExample of(int retryLimit, Duration timeout) {
-        return new FormattingExample(retryLimit, timeout);
+    public static Formatter of(int retryLimit, Duration timeout) {
+        return new Formatter(retryLimit, timeout);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 0) Main 메서드: 실행 가능한 예시를 보여주기 위해 추가
+    // ─────────────────────────────────────────────────────────────────────────────
+    public static void main(String[] args) {
+        System.out.println("=== FormattingExample 실행 예시 ===");
+
+        // 기본 설정으로 인스턴스 생성
+        Formatter processor = Formatter.withDefaults();
+
+        // 테스트할 작업 목록
+        List<String> tasks = Arrays.asList(
+                "task1",        // 성공 (짝수 길이)
+                "task",         // 실패 (홀수 길이)
+                "",             // 실패 (공백)
+                "longTask",     // 실패 (홀수 길이)
+                "test",         // 성공 (짝수 길이)
+                null,           // 실패 (null)
+                "processing"    // 성공 (짝수 길이)
+        );
+
+        System.out.println("처리할 작업들: " + tasks);
+        System.out.println();
+
+        // 작업 처리 실행
+        ProcessingResult result = processor.processTasks(tasks);
+
+        // 결과 출력
+        System.out.println("처리 결과: " + result);
+        System.out.println("성공률: " + String.format("%.1f%%",
+                (double) result.successCount() / result.total() * 100));
+
+        System.out.println();
+        System.out.println("=== 커스텀 설정 예시 ===");
+
+        // 커스텀 설정으로 다른 인스턴스 생성
+        Formatter customProcessor = Formatter.of(1, Duration.ofMillis(500));
+        ProcessingResult customResult = customProcessor.processTasks(
+                Arrays.asList("short", "medium", "verylongtext")
+        );
+
+        System.out.println("커스텀 처리 결과: " + customResult);
     }
 
     // ─────────────────────────────────────────────────────────────────────────────
@@ -95,8 +142,13 @@ public final class FormattingExample {
         int attempt = 0;
         while (attempt <= maxRetry) {
             attempt++;
+            System.out.printf("  [%s] 시도 %d/%d... ", name, attempt, maxRetry + 1);
+
             if (invoke(name, timeout)) {
+                System.out.println("성공!");
                 return true;
+            } else {
+                System.out.println("실패");
             }
         }
         return false;
@@ -107,8 +159,20 @@ public final class FormattingExample {
      * 한 줄이 너무 길어질 때는, 인자 목록/메서드 체이닝에서 합리적으로 개행합니다.
      */
     private boolean invoke(String name, Duration timeout) {
-        // 예시: 이름 길이가 짝수면 성공, 홀수면 실패(단순 예시)
-        return name.length() % 2 == 0 && timeout.toMillis() >= 500;
+        // 시뮬레이션: 짧은 대기 시간
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return false;
+        }
+
+        // 예시: 이름 길이가 짝수면 성공률 80%, 홀수면 성공률 20%
+        boolean lengthCondition = name.length() % 2 == 0;
+        boolean timeoutCondition = timeout.toMillis() >= 500;
+        double successRate = (lengthCondition && timeoutCondition) ? 0.8 : 0.2;
+
+        return RANDOM.nextDouble() < successRate;
     }
 
     private boolean isBlank(String s) {
