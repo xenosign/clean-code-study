@@ -63,5 +63,71 @@ public class Comment {
     public void paymentProcess() {
         // TODO: 결제 로직 구현 필요 (외부 PG사 API 연동 예정)
         // FIXME: 현재는 mock 데이터만 반환 중
+        System.out.println("결제 처리 중... (mock 데이터)");
+    }
+
+    // Getter 메서드들
+    public int getCounter() {
+        return counter;
+    }
+
+    public int getApiCallCount() {
+        return apiCallCount;
+    }
+
+    /**
+     * 실행 가능한 main 메서드
+     * 각 메서드의 동작을 확인할 수 있다.
+     */
+    public static void main(String[] args) {
+        Comment example = new Comment();
+
+        System.out.println("=== 주석 작성 가이드 예시 실행 ===\n");
+
+        // 초기 상태 출력
+        System.out.println("1. 초기 상태:");
+        System.out.println("   Counter: " + example.getCounter());
+        System.out.println("   API Call Count: " + example.getApiCallCount());
+        System.out.println();
+
+        // 카운터 증가 테스트
+        System.out.println("2. increaseCounter() 메서드 5번 호출:");
+        for (int i = 0; i < 5; i++) {
+            example.increaseCounter();
+            System.out.println("   호출 " + (i+1) + "회 후 - Counter: " +
+                    example.getCounter() + ", API Call Count: " +
+                    example.getApiCallCount());
+        }
+        System.out.println();
+
+        // 성인 여부 확인 테스트
+        System.out.println("3. isUserAdult() 메서드 테스트:");
+        int[] testAges = {15, 18, 25};
+        for (int age : testAges) {
+            boolean isAdult = example.isUserAdult(age);
+            System.out.println("   나이 " + age + "세: " +
+                    (isAdult ? "성인" : "미성년자"));
+        }
+        System.out.println();
+
+        // 결제 프로세스 테스트
+        System.out.println("4. paymentProcess() 메서드 테스트:");
+        example.paymentProcess();
+        System.out.println();
+
+        // API 호출 제한 테스트
+        System.out.println("5. API 호출 제한 테스트 (15번 호출):");
+        Comment limitTest = new Comment();
+        for (int i = 0; i < 15; i++) {
+            limitTest.increaseCounter();
+            System.out.printf("   %2d회 호출 후 - API Call Count: %d%n",
+                    i+1, limitTest.getApiCallCount());
+        }
+
+        System.out.println("\n=== 실행 완료 ===");
+        System.out.println("주석 작성 원칙:");
+        System.out.println("• 좋은 주석은 '왜(Why)'를 설명한다");
+        System.out.println("• 나쁜 주석은 '무엇(What)'을 반복한다");
+        System.out.println("• 코드 자체로 설명 가능하면 주석은 불필요하다");
     }
 }
